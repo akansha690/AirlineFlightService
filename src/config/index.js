@@ -1,5 +1,6 @@
 
+
 module.exports={
-    serverConfig : require("./server.config.js"),
-    logger: require("./logger.js")
+    serverPort : require('./server.config.js'),
+    Logger : require('./logger.config.js')
 }
