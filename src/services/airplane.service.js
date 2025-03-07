@@ -1,8 +1,11 @@
 const {AirplaneRepository} = require("../respository/index.js");
 
+const airplaneRepository = new AirplaneRepository();
+
 async function createAirplane(data){
     try {
-        const airplane = await AirplaneRepository.create(data);
+        // console.log(data)
+        const airplane = await airplaneRepository.create(data);
         return airplane;
     } catch (error) {
         throw error;

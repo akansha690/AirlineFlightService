@@ -2,14 +2,15 @@ const {Logger} = require("../config/index.js")
 
 class CrudRepository{
     constructor(model){
-        this.model=model
+        this.model=model;
     }
     async create(data){
         try {
             const response = await this.model.create(data);
             return response;
         } catch (error) {
-            Logger.error("Something went wrong in CRUD : create")
+            Logger.error("Something went wrong in CRUD : create");
+            throw error;
         }
     }
     async destroy(data){
@@ -18,6 +19,7 @@ class CrudRepository{
             return response;
         } catch (error) {
             Logger.error("Something went wrong in CRUD : destroy")
+            throw error;
         }
     }
     async get(data){
@@ -26,6 +28,7 @@ class CrudRepository{
             return response;
         } catch (error) {
             Logger.error("Something went wrong in CRUD : get")
+            throw error;
         }
     }
     async getAll(){
@@ -34,6 +37,7 @@ class CrudRepository{
             return response;
         } catch (error) {
             Logger.error("Something went wrong in CRUD : getAll")
+            throw error;
         }
     }
     async update(id, data){  // data passed should be an object 
@@ -42,6 +46,7 @@ class CrudRepository{
             return response;
         } catch (error) {
             Logger.error("Something went wrong in CRUD : update")
+            throw error;
         }
     }
 
