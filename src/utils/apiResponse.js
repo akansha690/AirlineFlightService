@@ -1,4 +1,4 @@
-class apiResponse{
+class ApiResponse{
     constructor(
         message, statusCode=200, data=null, success=true
     ){
@@ -8,4 +8,4 @@ class apiResponse{
         this.data=data;
     }
 }
-module.exports = apiResponse;
+module.exports = ApiResponse;

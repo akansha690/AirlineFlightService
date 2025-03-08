@@ -1,15 +1,16 @@
 
-class apiError extends Error{
+class ApiError extends Error{
     constructor(
         message,
-        error,
-        statusCode
+        statusCode, 
+        error={}
     ){
-        super(message);
+        super();
         this.message= message;
-        this.error= error;
         this.statusCode=statusCode;
+        this.success=false;
+        this.error=error;
     }
 }
 
-module.exports = apiError;
+module.exports = ApiError;
