@@ -52,7 +52,7 @@ async function getAllAirplanes(req, res){
     } catch (error) {
         // console.log(error);
         errorResponse.error=error;
-        errorResponse.message=error.message;
+        errorResponse.message="Someth";
         return res.status(error.statusCode).json(errorResponse);
     }
 } 

@@ -1,7 +1,10 @@
 const express = require('express');
-const airplaneRoutes = require("./airplane.routes.js")
 const router=express.Router();
 
-router.use('/airplanes', airplaneRoutes)
+const airplaneRoutes = require("./airplane.routes.js");
+const cityRoutes = require("./city.routes.js");
+
+router.use('/airplanes', airplaneRoutes);
+router.use('/city', cityRoutes);
 
 module.exports = router;
