@@ -2,9 +2,9 @@ const express = require('express');
 const router=express.Router();
 
 const {airplaneController}=require("../../controllers/index.js")
-const {airplanecreateMiddlewares} = require("../../middlewares/index.js")
+const {airplaneMiddlewares} = require("../../middlewares/index.js")
 router.post('/', 
-    airplanecreateMiddlewares.validateCreateRequest,
+    airplaneMiddlewares.validateCreateRequest,
     airplaneController.createAirplane )
 
 router.get('/:id', airplaneController.getAirplane );    
