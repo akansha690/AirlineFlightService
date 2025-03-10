@@ -1,38 +1,28 @@
+const { StatusCodes } = require("http-status-codes");
+const {airportService}=require("../services/index.js");
+const { successResponse, errorResponse } = require("../utils/index.js");
 
-const {airplaneService} = require("../services/index.js");
-const {StatusCodes} = require("http-status-codes");
-const {errorResponse, successResponse} = require("../utils/index.js");
-
-
-async function createAirplane(req, res){
+async function createAirport(req, res){
     try {
-        const airplane = await airplaneService.createAirplane({
-            modelNumber: req.body.modelNumber,
-            capacity: req.body.capacity
-        })
-        // console.log(airplane)
-        return res.status(StatusCodes.CREATED)
-        .json({
-            success: true,
-            message:"Airplane has been created successfully",
-            data:airplane,
-            error:{}
-        });  
-    } 
-    catch(error) {
-        // console.log(error.message);
+        const data = req.body;
+        const airport= await airportService.createAirport(data);
+        successResponse.data= airport;
+        successResponse.message="Airport has been created successfully";
+        return res.status(StatusCodes.CREATED).json(successResponse);
+    } catch (error) {
         errorResponse.message=error.message;
         return res.status(error.statusCode).json(errorResponse);
     }
-}
+} 
 
-async function getAirplane(req, res){
+
+async function getAirport(req, res){
     try {
         const data =  req.params.id;
-        const resp = await airplaneService.getAirplane(data);
+        const resp = await airportService.getAirport(data);
         // console.log(resp);
         successResponse.data = resp;
-        successResponse.message="Got data successfully";
+        successResponse.message="Airport fetched successfully";
         return res.status(StatusCodes.ACCEPTED).json(successResponse);
         
     } catch (error) {
@@ -42,11 +32,11 @@ async function getAirplane(req, res){
         return res.status(error.statusCode).json(errorResponse);
     }
 } 
-async function getAllAirplanes(req, res){
+async function getAllAirports(req, res){
     try {
-        const resp = await airplaneService.getAllAirplane();
+        const resp = await airportService.getAllAirport();
         successResponse.data = resp;
-        successResponse.message="fetched all data successfully";
+        successResponse.message="fetched all airports successfully";
         return res.status(StatusCodes.OK).json(successResponse);
         
     } catch (error) {
@@ -57,11 +47,11 @@ async function getAllAirplanes(req, res){
     }
 } 
 
-async function destroyAirplane(req, res){
+async function destroyAirport(req, res){
     try {
-        const resp = await airplaneService.destroyAirplane(req.params.id);
+        const resp = await airportService.destroyAirport(req.params.id);
         successResponse.data = resp;
-        successResponse.message="Airplane deleted successfully";
+        successResponse.message="Airport deleted successfully";
         return res.status(StatusCodes.OK).json(successResponse);
         
     } catch (error) {
@@ -71,28 +61,28 @@ async function destroyAirplane(req, res){
         return res.status(error.statusCode).json(errorResponse);
     }
 } 
-async function updateAirplane(req, res){
+async function updateAirport(req, res){
     try {
         const id = req.params.id;
         const data = req.body;
-        const resp = await airplaneService.updateAirplane(id, data);
+        const resp = await airportService.updateAirport(id, data);
         successResponse.data = resp;
-        successResponse.message="Airplane updated successfully";
+        successResponse.message="Airport updated successfully";
         return res.status(StatusCodes.OK).json(successResponse);
         
     } catch (error) {
         // console.log(error);
         errorResponse.error=error;
-        errorResponse.message="Airplane not updated";
+        errorResponse.message="Airport not updated";
         return res.status(error.statusCode).json(errorResponse);
     }
 } 
 
 
 module.exports={
-    createAirplane,
-    getAirplane,
-    getAllAirplanes,
-    destroyAirplane,
-    updateAirplane
+    createAirport,
+    getAirport,
+    getAllAirports,
+    destroyAirport,
+    updateAirport
 }
