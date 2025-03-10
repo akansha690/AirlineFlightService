@@ -23,6 +23,34 @@ async function createCity(data){
 }
 
 
+async function destroyCity(id){
+    try {
+        const response = await cityRepository.destroy(id);
+        return response;
+    } catch (error) {
+        // console.log(error);
+        if(error.statusCode==StatusCodes.NOT_FOUND){
+            throw new ApiError("City not found", error.statusCode);
+        }
+        throw new ApiError("cannot destroy City", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+async function updateCity(id, data){
+    try {
+        const response = await cityRepository.update(id, data);
+        return response;
+    } catch (error) {
+        // console.log(error);
+        if(error.statusCode==StatusCodes.NOT_FOUND){
+            throw new ApiError(error.message, error.statusCode);
+        }
+        throw new ApiError("cannot update City", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 module.exports={
-    createCity
+    createCity,
+    destroyCity,
+    updateCity
 }
