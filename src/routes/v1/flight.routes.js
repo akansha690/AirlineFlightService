@@ -11,5 +11,6 @@ router.get('/all', flightController.getAllflights);
 router.get('/:id', flightController.getflight );    
 router.delete('/:id', flightController.destroyflight );    
 router.patch('/:id', flightController.updateflight);    
+router.get('/', flightController.getAllflightsQuery);    
 
 module.exports = router;

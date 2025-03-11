@@ -3,6 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const {FlightRepository} = require("../respository/index.js");
 const { ApiError } = require("../utils/index.js");
 const {helperDateTime} = require("../utils/index.js");
+const {Op, where}=require("sequelize");
 
 const flightRepository = new FlightRepository();
 
@@ -23,7 +24,6 @@ async function createflight(data){
         throw new ApiError("Cannot create a flight object", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
-
 
 async function getflight(id){
     try {
@@ -74,10 +74,54 @@ async function updateflight(id, data){
     }
 }
 
+async function getAllflights(query){
+    try {
+        let customQuery={};
+        let sortQuery={};
+        if(query.trips){
+            [departureAirportId, arrivalAirportId] = query.trips.split("-");
+            customQuery.departureAirportId=departureAirportId;
+            customQuery.arrivalAirportId=arrivalAirportId;
+        }
+        if(query.price){
+            [minPrice, maxPrice]=query.price.split("-");
+            customQuery.price={
+                [Op.between] : [minPrice, ((maxPrice==undefined)? 25000 : maxPrice )]
+            }
+        }
+        if(query.travellers){
+            customQuery.totalSeats = {
+                [Op.gte] : query.travellers
+            }
+        }
+
+        let endingTripDate=" 23:59:00";
+        if(query.tripDate){
+            customQuery.departureTime = {
+                [Op.between] : [query.tripDate , query.tripDate+endingTripDate]
+            }
+        }
+        if(query.sort){
+            const params = query.sort.split(",");
+            sortQuery = params.forEach((param)=>{
+                param.split("_");
+            }) 
+        }
+        const flight = await flightRepository.getAllflight(customQuery, sortQuery); 
+        return flight;
+    } catch (error) {
+        if(error.statusCode==StatusCodes.NOT_FOUND){
+            throw new ApiError(error.message, error.statusCode);
+        }
+        throw new ApiError("Cannot get all the flights", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 module.exports={
     createflight,
     getflight,
     getAllflight,
     destroyflight,
-    updateflight
+    updateflight,
+    getAllflights
 }

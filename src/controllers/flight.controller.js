@@ -78,6 +78,23 @@ async function updateflight(req, res){
         return res.status(error.statusCode).json(errorResponse);
     }
 } 
+async function getAllflightsQuery(req, res){
+    try {       
+        const resp = await flightService.getAllflights(req.query);
+        successResponse.data = resp;
+        if(resp.length === 0){
+            successResponse.message="No such flights are there";
+        }
+        else successResponse.message="flight fetched successfully";
+        return res.status(StatusCodes.OK).json(successResponse);
+        
+    } catch (error) {
+        errorResponse.error=error;
+        errorResponse.message="flights not fetched";
+        return res.status(error.statusCode).json(errorResponse);
+    }
+} 
+
 
 
 module.exports={
@@ -85,5 +102,6 @@ module.exports={
     getflight,
     getAllflights,
     destroyflight,
-    updateflight
+    updateflight,
+    getAllflightsQuery
 }
