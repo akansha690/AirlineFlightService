@@ -5,4 +5,5 @@ module.exports={
     errorResponse : require("./error.response.js"),
     successResponse : require("./success.response.js"),
     helperDateTime : require("./dateTimeHelper.js"),
+    enums : require("./enums.js"),
 }
