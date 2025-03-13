@@ -95,7 +95,21 @@ async function getAllflightsQuery(req, res){
     }
 } 
 
+async function updateSeats(req, res){
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const resp = await flightService.updateSeats(id, data);
+        successResponse.data = resp;
+        successResponse.message="flight seats updated successfully";
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
 
+        errorResponse.error=error;
+        errorResponse.message="flight seats not updated";
+        return res.status(error.statusCode).json(errorResponse);
+    }
+}
 
 module.exports={
     createflight,
@@ -103,5 +117,6 @@ module.exports={
     getAllflights,
     destroyflight,
     updateflight,
-    getAllflightsQuery
+    getAllflightsQuery,
+    updateSeats
 }

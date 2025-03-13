@@ -12,5 +12,6 @@ router.get('/:id', flightController.getflight );
 router.delete('/:id', flightController.destroyflight );    
 router.patch('/:id', flightController.updateflight);    
 router.get('/', flightController.getAllflightsQuery);    
+router.patch('/update-seat/:id', flightMiddlewares.validateSeatUpdate, flightController.updateSeats);    
 
 module.exports = router;

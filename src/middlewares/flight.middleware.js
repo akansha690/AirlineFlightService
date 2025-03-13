@@ -50,6 +50,17 @@ function validateCreateRequest(req, res, next){
     next();
 }
 
+function validateSeatUpdate(req, res, next){
+
+    if(!req.body.seats){
+        errorResponse.message="something went wrong";
+        errorResponse.error = new ApiError("Invalid incoming request : seats not found", StatusCodes.BAD_REQUEST);
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+    next();
+}
+
 module.exports={
-    validateCreateRequest
+    validateCreateRequest,
+    validateSeatUpdate
 }
